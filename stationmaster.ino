@@ -9,8 +9,9 @@ int button_id[] = {2,3,4,5,6,7,8};                  // toggle buttons
 int point_id[] = {0,1,3,4,5,7,8};                   // points connected to Adafruit 16-channel PWM servo driver
 int p_direction[] = {150,150,150,150,150,150,150};  // actual position
 int p_straight[] = {150,150,150,150,150,150,150};   // value to move the point in straight position
-int p_dev[] = {270,270,270,270,270,270,270};        // value to move the point in deviated position
-int l_straight[] = {7,8,9,10,11,12,13};             // leds (TBD)
+int p_diverging[] = {270,270,270,270,270,270,270};  // value to move the point in diverging position
+int l_straight[] = {7,8,9,10,11,12,13};             // leds, straight position
+int l_diverging[] = {14,15,16,17,18,19,20};         // leds, diverging postition
 
 int reading;            // current reading from the input pin
 int previous = HIGH;    // previous reading from the input pin
@@ -52,19 +53,39 @@ void toggle_point(byte which)
 {
     if (p_direction[which] == p_straight[which])
       {
-      p_direction[which] = p_dev[which];
-      for (uint16_t pulselen = p_straight[which]; pulselen < p_dev[which]; pulselen++) {
+      p_direction[which] = p_diverging[which];
+      for (uint16_t pulselen = p_straight[which]; pulselen < p_diverging[which]; pulselen++) {
         pwm.setPWM(point_id[which], 0, pulselen);
         delay(5);
+                  Serial.print("pulselen: ");
+                  Serial.println(pulselen);
+                  if (pulselen > (p_diverging[which]-(p_diverging[which]*.2)))
+                  {
+                    digitalWrite(13, HIGH);
+                    }    
+                  if (pulselen > (p_straight[which]+(p_straight[which]*.2)))
+                  {
+                    digitalWrite(12, LOW);
+                  }
       }
       pwm.setPWM(point_id[which], 0, 0);              // turn off servo
       }
     else
       {
       p_direction[which] = p_straight[which];
-      for (uint16_t pulselen = p_dev[which]; pulselen > p_straight[which]; pulselen--) {
+      for (uint16_t pulselen = p_diverging[which]; pulselen > p_straight[which]; pulselen--) {
         pwm.setPWM(point_id[which], 0, pulselen);
         delay(5);
+                  if (pulselen < (p_diverging[which]-(p_diverging[which]*.2)))
+                  {
+                    digitalWrite(13, LOW);
+                  }
+                  if (pulselen < (p_straight[which]+(p_straight[which]*.2)))
+                  {
+                    digitalWrite(12, HIGH);
+                  }    
+                  Serial.print("pulselen: ");
+                  Serial.println(pulselen);
       }
       pwm.setPWM(point_id[which], 0, 0);              // turn off servo
       }
