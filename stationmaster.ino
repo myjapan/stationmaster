@@ -11,7 +11,7 @@ Adafruit_PWMServoDriver led2s = Adafruit_PWMServoDriver(0x41);
 Adafruit_PWMServoDriver led1d = Adafruit_PWMServoDriver(0x40);
 Adafruit_PWMServoDriver led2d = Adafruit_PWMServoDriver(0x41);
 
-Adafruit_PWMServoDriver* bp[] = {&pwm2, &pwm2, &pwm2, &pwm2, &pwm2};
+Adafruit_PWMServoDriver* bp[] = {&pwm2, &pwm2, &pwm2, &pwm2, &pwm2, &pwm2, &pwm2, &pwm2, &pwm2};
 Adafruit_PWMServoDriver* bls[] = {&led1s, &led2s, &led1s, &led1s, &led1s, &led1s, &led1s, &led1s, &led1s};
 Adafruit_PWMServoDriver* bld[] = {&led2d, &led1d, &led1d, &led1d, &led1d, &led1d, &led1d, &led1d, &led1d};
 
@@ -65,6 +65,9 @@ void setup()
     bld[i]->setPWM(l_diverging[i], 0, 0);
     bls[i]->setPWM(l_straight[i], 4096, 0);
   }
+  tone(3,1400,100);
+  delay(100);
+  noTone(3);
 } 
 
 void loop()
