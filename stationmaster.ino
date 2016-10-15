@@ -18,9 +18,9 @@ Adafruit_PWMServoDriver* bld[] = {&led1s, &led2s, &led1d, &led1d, &led1d, &led1d
 byte button_total = 9;
 int button_id[] = {13,8,12,11,6,5,10,7,9};            // toggle buttons
 int point_id[] = {15,11,13,12,6,10,9,8,7};             // points connected to Adafruit 16-channel PWM servo driver
-int p_direction[] = {340,340,220,220,150,150,340,220,150};      // actual position
-int p_straight[] = {220,220,220,220,150,150,220,210,150};       // value to move the point in straight position
-int p_diverging[] = {340,340,340,340,270,270,340,330,270};      // value to move the point in diverging position
+int p_direction[] = {340,340,220,220,220,220,340,210,220};      // actual position
+int p_straight[] = {220,220,220,220,220,250,220,210,220};       // value to move the point in straight position
+int p_diverging[] = {340,340,340,340,350,420,340,330,340};      // value to move the point in diverging position
 int l_straight[] = {3,4,2,1,0,5,9,14,15};             // leds, straight position
 int l_diverging[] = {3,1,8,7,6,12,13,10,11};            // leds, diverging postition
 
