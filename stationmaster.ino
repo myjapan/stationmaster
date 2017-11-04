@@ -18,9 +18,9 @@ Adafruit_PWMServoDriver* bld[] = {&led1s, &led2s, &led1d, &led1d, &led1d, &led1d
 byte button_total = 9;
 int button_id[] = {13,8,12,11,6,5,10,7,9};            // toggle buttons
 int point_id[] = {15,11,13,12,6,10,9,8,7};             // points connected to Adafruit 16-channel PWM servo driver
-int p_direction[] = {340,340,220,220,150,150,340,220,150};      // actual position
-int p_straight[] = {220,220,220,220,150,150,220,210,150};       // value to move the point in straight position
-int p_diverging[] = {340,340,340,340,270,270,340,330,270};      // value to move the point in diverging position
+int p_direction[] = {340,340,200,220,200,230,340,220,150};      // actual position
+int p_straight[] = {220,250,200,220,200,230,220,210,150};       // value to move the point in straight position
+int p_diverging[] = {340,340,340,340,340,370,340,330,270};      // value to move the point in diverging position
 int l_straight[] = {3,4,2,1,0,5,9,14,15};             // leds, straight position
 int l_diverging[] = {3,1,8,7,6,12,13,10,11};            // leds, diverging postition
 
@@ -109,12 +109,12 @@ void toggle_point(byte which)
         bp[which]->setPWM(point_id[which], 0, pulselen);
 //                  Serial.print("Pulselen = ");
 //                  Serial.println(pulselen);
-        delay(7);
-                  if (pulselen > (p_diverging[which]-(p_diverging[which]*.35)))
+        delay(9);
+                  if (pulselen > (p_diverging[which]-(p_diverging[which]*.25)))
                   {
                     bld[which]->setPWM(l_diverging[which], 4096, 0);
                     }    
-                  if (pulselen > (p_straight[which]+(p_straight[which]*.35)))
+                  if (pulselen > (p_straight[which]+(p_straight[which]*.25)))
                   {
                     bls[which]->setPWM(l_straight[which], 0, 0);
                   }
@@ -133,12 +133,12 @@ void toggle_point(byte which)
         bp[which]->setPWM(point_id[which], 0, pulselen);
 //                  Serial.print("Pulselen = ");
 //                  Serial.println(pulselen);
-        delay(5);
-                  if (pulselen < (p_diverging[which]-(p_diverging[which]*.35)))
+        delay(9);
+                  if (pulselen < (p_diverging[which]-(p_diverging[which]*.25)))
                   {
                     bld[which]->setPWM(l_diverging[which], 0, 0);
                   }
-                  if (pulselen < (p_straight[which]+(p_straight[which]*.35)))
+                  if (pulselen < (p_straight[which]+(p_straight[which]*.25)))
                   {
                     bls[which]->setPWM(l_straight[which], 4096, 0);
                   }    
